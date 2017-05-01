@@ -9,7 +9,10 @@
 #import <TBSockets/TBInputStream.h>
 
 
-@interface TBInputStream () <NSStreamDelegate>
+@interface TBInputStream () <NSStreamDelegate> {
+    BOOL _closed;
+}
+
 @property (nonatomic, readonly) NSRunLoop *runLoop;
 @property (nonatomic, readonly) void(^openCallback)(TBInputStream *);
 
@@ -43,6 +46,12 @@
     return self;
 }
 
+- (void)dealloc {
+    if (!_closed) {
+        [self close];
+    }
+}
+
 #pragma mark - Open / Close
 
 - (void)open:(void(^)(TBInputStream *stream))openCallback {
@@ -53,9 +62,12 @@
 }
 
 - (void)close {
+    assert(!_closed);
+
     [self.stream removeFromRunLoop:_runLoop forMode:NSDefaultRunLoopMode];
     [self.stream close];
     _runLoop = nil;
+    _closed  = YES;
 }
 
 #pragma mark - Convenience
@@ -143,11 +155,11 @@
         case sizeof(UInt8):
             return @(*(UInt8 *)buffer);
         case sizeof(UInt16):
-            return @(NSSwapShort(*(UInt16 *)buffer));
+            return @((*(UInt16 *)buffer));
         case sizeof(UInt32):
-            return @(NSSwapInt(*(UInt32 *)buffer));
+            return @((*(UInt32 *)buffer));
         case sizeof(UInt64):
-            return @(NSSwapLong(*(UInt64 *)buffer));
+            return @((*(UInt64 *)buffer));
 
         default:
             @throw NSGenericException;
@@ -187,7 +199,7 @@
     self.pendingReadJobCallbacks.firstObject(self.currentReadJob, error);
     [self.pendingReadJobCallbacks removeObjectAtIndex:0];
 
-    if (self.pendingReadJobs) {
+    if (self.pendingReadJobs.count) {
         // Dequeue the next job
         self.currentReadJob       = [NSMutableData data];
         self.currentReadJobToRead = self.pendingReadJobs.firstObject.integerValue;

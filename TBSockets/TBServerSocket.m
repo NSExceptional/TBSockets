@@ -146,6 +146,10 @@ void TBSocketCallbackHandler(CFSocketRef socket, CFSocketCallBackType type,
 }
 
 - (TBSocket *)didAcceptNewConnection:(CFSocketNativeHandle)socketHandle {
+    // Ignore SIGPIPE signal when connection closes
+    int ignoreSIGPIPE = 1;
+    setsockopt(socketHandle, SOL_SOCKET, SO_NOSIGPIPE, &ignoreSIGPIPE, sizeof(ignoreSIGPIPE));
+
     // Create streams, pass to socket
     CFReadStreamRef readStream;
     CFWriteStreamRef writeStream;

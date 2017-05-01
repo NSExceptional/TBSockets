@@ -9,7 +9,10 @@
 #import <TBSockets/TBOutputStream.h>
 
 
-@interface TBOutputStream () <NSStreamDelegate>
+@interface TBOutputStream () <NSStreamDelegate> {
+    BOOL _closed;
+}
+
 @property (nonatomic, readonly) NSRunLoop *runLoop;
 @property (nonatomic, readonly) void(^openCallback)(TBOutputStream *);
 
@@ -43,6 +46,12 @@
     return self;
 }
 
+- (void)dealloc {
+    if (!_closed) {
+        [self close];
+    }
+}
+
 #pragma mark - Open / Close
 
 - (void)open:(void(^)(TBOutputStream *stream))openCallback {
@@ -53,9 +62,12 @@
 }
 
 - (void)close {
+    assert(!_closed);
+
     [self.stream removeFromRunLoop:_runLoop forMode:NSDefaultRunLoopMode];
     [self.stream close];
     _runLoop = nil;
+    _closed  = YES;
 }
 
 #pragma mark - Private
@@ -119,7 +131,7 @@
     self.currentWriteJobWritten = 0;
     self.currentWriteJob = self.pendingWriteJobs.firstObject;
 
-    if (self.pendingWriteJobs) {
+    if (self.pendingWriteJobs.count) {
         // Dequeue the next job
         [self.pendingWriteJobs removeObjectAtIndex:0];
     }
