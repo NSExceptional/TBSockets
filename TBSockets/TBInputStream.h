@@ -6,7 +6,7 @@
 //  Copyright © 2017 Tanner Bennett. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <TBStream.h>
 
 
 typedef void(^TBSocketReadCallback)(NSData *data, NSError *error);
@@ -15,9 +15,7 @@ typedef void(^TBSocketReadCallback)(NSData *data, NSError *error);
 /// by a synchronous operation before the async operation completes.
 ///
 /// Async operations are thread-safe and serialized.
-@interface TBInputStream : NSObject
-
-+ (instancetype)from:(NSInputStream *)stream;
+@interface TBInputStream : TBStream
 
 @property (nonatomic, readonly) NSInputStream *stream;
 
@@ -30,10 +28,6 @@ typedef void(^TBSocketReadCallback)(NSData *data, NSError *error);
 - (NSNumber *)read32;
 /// Reads 8 bytes
 - (NSNumber *)read64;
-
-#pragma mark - Open / Close
-- (void)open:(void(^)(TBInputStream *stream))openCallback;
-- (void)close;
 
 #pragma mark - Synchronous
 /// Reads until the stream reaches EOF or until an error occurs (returned in error param)

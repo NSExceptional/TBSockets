@@ -6,7 +6,7 @@
 //  Copyright © 2017 Tanner Bennett. All rights reserved.
 //
 
-#import <TBSockets/TBServerSocket.h>
+#import <TBServerSocket.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <sys/socket.h>
 #include <netinet/in.h>

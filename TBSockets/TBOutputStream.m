@@ -6,15 +6,10 @@
 //  Copyright © 2017 Tanner Bennett. All rights reserved.
 //
 
-#import <TBSockets/TBOutputStream.h>
+#import <TBOutputStream.h>
 
 
-@interface TBOutputStream () <NSStreamDelegate> {
-    BOOL _closed;
-}
-
-@property (nonatomic, readonly) NSRunLoop *runLoop;
-@property (nonatomic, readonly) void(^openCallback)(TBOutputStream *);
+@interface TBOutputStream ()
 
 #pragma mark - Async write jobs
 @property (nonatomic) BOOL writing;
@@ -26,15 +21,9 @@
 @end
 
 @implementation TBOutputStream
+@dynamic stream;
 
 #pragma mark - Initialization
-
-+ (instancetype)from:(NSOutputStream *)stream {
-    TBOutputStream *me = [self new];
-    me->_stream = stream;
-    stream.delegate = me;
-    return me;
-}
 
 - (id)init {
     self = [super init];
@@ -44,30 +33,6 @@
     }
 
     return self;
-}
-
-- (void)dealloc {
-    if (!_closed) {
-        [self close];
-    }
-}
-
-#pragma mark - Open / Close
-
-- (void)open:(void(^)(TBOutputStream *stream))openCallback {
-    _runLoop = [NSRunLoop currentRunLoop];
-    _openCallback = openCallback;
-    [self.stream scheduleInRunLoop:_runLoop forMode:NSDefaultRunLoopMode];
-    [self.stream open];
-}
-
-- (void)close {
-    assert(!_closed);
-
-    [self.stream removeFromRunLoop:_runLoop forMode:NSDefaultRunLoopMode];
-    [self.stream close];
-    _runLoop = nil;
-    _closed  = YES;
 }
 
 #pragma mark - Private
@@ -94,7 +59,7 @@
 
 - (void)writeForCurrentWriteJob {
     if (self.currentWriteJob && !self.writing) {
-        @synchronized (_stream) {
+        @synchronized (self.stream) {
             self.writing = YES;
 
             // Write data and update index
@@ -164,7 +129,7 @@
 
 - (void)write:(NSData *)data completion:(TBSocketWriteCallback)callback {
     // Synchronized to protect the thread safety of the current job state
-    @synchronized (_stream) {
+    @synchronized (self.stream) {
         [self.pendingWriteJobCallbacks addObject:callback];
 
         if (self.currentWriteJob) {
@@ -184,20 +149,15 @@
 #pragma mark - NSStreamDelegate
 
 - (void)stream:(NSStream *)stream handleEvent:(NSStreamEvent)event {
+    [super stream:stream handleEvent:event];
+
     switch (event) {
-        case NSStreamEventNone:
-        case NSStreamEventHasBytesAvailable:
-            break;
-        case NSStreamEventOpenCompleted:
-            self.openCallback(self);
-            _openCallback = nil;
-            break;
         case NSStreamEventHasSpaceAvailable:
             [self writeForCurrentWriteJob];
             break;
-        case NSStreamEventErrorOccurred:
-        case NSStreamEventEndEncountered:
+
             // All of this is handled as we read and write
+        default:
             break;
     }
 }

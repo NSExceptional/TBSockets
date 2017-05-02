@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <TBSockets/TBSocketAddress.h>
-#import <TBSockets/TBInputStream.h>
-#import <TBSockets/TBOutputStream.h>
+#import <TBSocketAddress.h>
+#import <TBInputStream.h>
+#import <TBOutputStream.h>
 
 
 /// Socket must be opened before using either of the streams.
@@ -29,6 +29,9 @@
 
 @property (nonatomic, readonly) TBInputStream *inputStream;
 @property (nonatomic, readonly) TBOutputStream *outputStream;
+
+/// Sets the runLoop property of each stream.
+- (void)setStreamsRunLoop:(NSRunLoop *)runLoop;
 
 #pragma mark - Methods
 - (void)open;

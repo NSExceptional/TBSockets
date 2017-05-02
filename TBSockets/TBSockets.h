@@ -6,4 +6,4 @@
 //  Copyright © 2017 Tanner Bennett. All rights reserved.
 //
 
-#import <TBSockets/TBServerSocket.h>
+#import <TBServerSocket.h>

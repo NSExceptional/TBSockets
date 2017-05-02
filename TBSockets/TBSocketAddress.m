@@ -6,7 +6,7 @@
 //  Copyright © 2017 Tanner Bennett. All rights reserved.
 //
 
-#import <TBSockets/TBSocketAddress.h>
+#import <TBSocketAddress.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netdb.h>

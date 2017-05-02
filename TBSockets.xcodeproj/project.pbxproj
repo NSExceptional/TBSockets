@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C310C9A91EB92B0700ABC711 /* TBStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C310C9A71EB92B0700ABC711 /* TBStream.h */; };
+		C310C9AA1EB92B0700ABC711 /* TBStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C310C9A81EB92B0700ABC711 /* TBStream.m */; };
 		C313C98E1E9EAD7400354CB6 /* TBSockets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C313C9841E9EAD7400354CB6 /* TBSockets.framework */; };
 		C313C9931E9EAD7400354CB6 /* TBSocketsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C313C9921E9EAD7400354CB6 /* TBSocketsTests.m */; };
 		C313C9951E9EAD7400354CB6 /* TBSockets.h in Headers */ = {isa = PBXBuildFile; fileRef = C313C9871E9EAD7400354CB6 /* TBSockets.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -33,6 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C310C9A71EB92B0700ABC711 /* TBStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBStream.h; sourceTree = "<group>"; };
+		C310C9A81EB92B0700ABC711 /* TBStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBStream.m; sourceTree = "<group>"; };
 		C313C9841E9EAD7400354CB6 /* TBSockets.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TBSockets.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C313C9871E9EAD7400354CB6 /* TBSockets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBSockets.h; sourceTree = "<group>"; };
 		C313C9881E9EAD7400354CB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -94,6 +98,8 @@
 				C313C9871E9EAD7400354CB6 /* TBSockets.h */,
 				C313C9A61E9EAD8B00354CB6 /* TBSocketAddress.h */,
 				C313C9A71E9EAD8B00354CB6 /* TBSocketAddress.m */,
+				C310C9A71EB92B0700ABC711 /* TBStream.h */,
+				C310C9A81EB92B0700ABC711 /* TBStream.m */,
 				C313C99E1E9EAD8B00354CB6 /* TBInputStream.h */,
 				C313C99F1E9EAD8B00354CB6 /* TBInputStream.m */,
 				C313C9A01E9EAD8B00354CB6 /* TBOutputStream.h */,
@@ -127,6 +133,7 @@
 				C313C9AC1E9EAD8B00354CB6 /* TBServerSocket.h in Headers */,
 				C313C9AE1E9EAD8B00354CB6 /* TBSocket.h in Headers */,
 				C313C9951E9EAD7400354CB6 /* TBSockets.h in Headers */,
+				C310C9A91EB92B0700ABC711 /* TBStream.h in Headers */,
 				C313C9A81E9EAD8B00354CB6 /* TBInputStream.h in Headers */,
 				C313C9AA1E9EAD8B00354CB6 /* TBOutputStream.h in Headers */,
 			);
@@ -233,6 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C313C9B11E9EAD8B00354CB6 /* TBSocketAddress.m in Sources */,
+				C310C9AA1EB92B0700ABC711 /* TBStream.m in Sources */,
 				C313C9AF1E9EAD8B00354CB6 /* TBSocket.m in Sources */,
 				C313C9AB1E9EAD8B00354CB6 /* TBOutputStream.m in Sources */,
 				C313C9A91E9EAD8B00354CB6 /* TBInputStream.m in Sources */,

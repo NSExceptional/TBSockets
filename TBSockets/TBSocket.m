@@ -6,7 +6,7 @@
 //  Copyright © 2017 Tanner Bennett. All rights reserved.
 //
 
-#import <TBSockets/TBSocket.h>
+#import <TBSocket.h>
 #include <arpa/inet.h>
 #include <netdb.h>
 
@@ -55,17 +55,22 @@ NSString * const kLocalHost = @"127.0.0.1";
 
 #pragma mark - Public
 
+- (void)setStreamsRunLoop:(NSRunLoop *)runLoop {
+    self.inputStream.runLoop = runLoop;
+    self.outputStream.runLoop = runLoop;
+}
+
 - (void)open {
     CFStreamPropertyKey key = kCFStreamPropertySocketNativeHandle;
 
-    [self.inputStream open:^(TBInputStream *stream) {
+    [self.inputStream open:^(TBStream *stream) {
         // Address stuff
         CFDataRef localSocket = (CFDataRef)CFReadStreamCopyProperty((__bridge_retained CFReadStreamRef)stream.stream, key);
         CFSocketNativeHandle handle;
         CFDataGetBytes(localSocket, CFRangeMake(0, sizeof(CFSocketNativeHandle)), (UInt8 *)&handle);
         _localAddress = [TBSocketAddress socket:handle];
     }];
-    [self.outputStream open:^(TBOutputStream *stream) {
+    [self.outputStream open:^(TBStream *stream) {
         // Address stuff
         CFDataRef remoteSocket = (CFDataRef)CFWriteStreamCopyProperty((__bridge_retained CFWriteStreamRef)stream.stream, key);
         CFSocketNativeHandle handle;

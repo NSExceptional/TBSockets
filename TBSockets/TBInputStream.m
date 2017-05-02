@@ -6,15 +6,10 @@
 //  Copyright © 2017 Tanner Bennett. All rights reserved.
 //
 
-#import <TBSockets/TBInputStream.h>
+#import <TBInputStream.h>
 
 
-@interface TBInputStream () <NSStreamDelegate> {
-    BOOL _closed;
-}
-
-@property (nonatomic, readonly) NSRunLoop *runLoop;
-@property (nonatomic, readonly) void(^openCallback)(TBInputStream *);
+@interface TBInputStream ()
 
 #pragma mark - Async read jobs
 @property (nonatomic) BOOL reading;
@@ -26,15 +21,9 @@
 @end
 
 @implementation TBInputStream
+@dynamic stream;
 
 #pragma mark - Initialization
-
-+ (instancetype)from:(NSInputStream *)stream {
-    TBInputStream *me = [self new];
-    me->_stream = stream;
-    stream.delegate = me;
-    return me;
-}
 
 - (id)init {
     self = [super init];
@@ -44,30 +33,6 @@
     }
 
     return self;
-}
-
-- (void)dealloc {
-    if (!_closed) {
-        [self close];
-    }
-}
-
-#pragma mark - Open / Close
-
-- (void)open:(void(^)(TBInputStream *stream))openCallback {
-    _runLoop = [NSRunLoop currentRunLoop];
-    _openCallback = openCallback;
-    [self.stream scheduleInRunLoop:_runLoop forMode:NSDefaultRunLoopMode];
-    [self.stream open];
-}
-
-- (void)close {
-    assert(!_closed);
-
-    [self.stream removeFromRunLoop:_runLoop forMode:NSDefaultRunLoopMode];
-    [self.stream close];
-    _runLoop = nil;
-    _closed  = YES;
 }
 
 #pragma mark - Convenience
@@ -98,7 +63,7 @@
 
 - (void)readForCurrentReadJob {
     if (self.currentReadJob && !self.reading) {
-        @synchronized (_stream) {
+        @synchronized (self.stream) {
             self.reading = YES;
 
             // Read available bytes for current job only
@@ -247,7 +212,7 @@
 
 - (void)readToLength:(NSUInteger)length completion:(TBSocketReadCallback)callback {
     // Synchronized to protect the thread safety of the current job state
-    @synchronized (_stream) {
+    @synchronized (self.stream) {
         [self.pendingReadJobCallbacks addObject:callback];
 
         if (self.currentReadJob) {
@@ -267,22 +232,15 @@
 #pragma mark - NSStreamDelegate
 
 - (void)stream:(NSStream *)stream handleEvent:(NSStreamEvent)event {
+    [super stream:stream handleEvent:event];
+
     switch (event) {
-        case NSStreamEventNone:
-            break;
-        case NSStreamEventOpenCompleted:
-            if (self.openCallback) {
-                self.openCallback(self);
-                _openCallback = nil;
-            }
-            break;
         case NSStreamEventHasBytesAvailable:
             [self readForCurrentReadJob];
             break;
-        case NSStreamEventHasSpaceAvailable:
-        case NSStreamEventErrorOccurred:
-        case NSStreamEventEndEncountered:
+
             // All of this is handled as we read and write
+        default:
             break;
     }
 }

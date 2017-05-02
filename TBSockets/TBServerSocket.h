@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <TBSockets/TBSocket.h>
+#import <TBSocket.h>
 
 
 typedef void(^TBServerSocketAcceptCallback)(TBSocket *socket, NSString *error);

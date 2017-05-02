@@ -6,7 +6,7 @@
 //  Copyright © 2017 Tanner Bennett. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <TBStream.h>
 
 
 typedef void(^TBSocketWriteCallback)(BOOL finished, NSError *error);
@@ -15,15 +15,9 @@ typedef void(^TBSocketWriteCallback)(BOOL finished, NSError *error);
 /// by a synchronous operation before the async operation completes.
 ///
 /// Async operations are thread-safe and serialized.
-@interface TBOutputStream : NSObject
-
-+ (instancetype)from:(NSOutputStream *)stream;
+@interface TBOutputStream : TBStream
 
 @property (nonatomic, readonly) NSOutputStream *stream;
-
-#pragma mark - Open / Close
-- (void)open:(void(^)(TBOutputStream *stream))openCallback;
-- (void)close;
 
 #pragma mark - Synchronous
 /// Writes until the stream reaches capacity or until an error occurs (returned in error param)
