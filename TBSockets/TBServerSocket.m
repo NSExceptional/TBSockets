@@ -91,7 +91,7 @@ void TBSocketCallbackHandler(CFSocketRef socket, CFSocketCallBackType type,
 
         // Enable local address reuse
         int on = 1;
-        setsockopt(handle, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
+        setsockopt(handle, SOL_SOCKET, SO_REUSEPORT, &on, sizeof(on));
 
         if (listen(handle, 1024)) {
             // Socket is already connected

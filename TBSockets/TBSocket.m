@@ -61,7 +61,7 @@ NSString * const kLocalHost = @"127.0.0.1";
 }
 
 - (void)open {
-    CFStreamPropertyKey key = kCFStreamPropertySocketNativeHandle;
+    CFStringRef key = kCFStreamPropertySocketNativeHandle;
 
     [self.inputStream open:^(TBStream *stream) {
         // Address stuff

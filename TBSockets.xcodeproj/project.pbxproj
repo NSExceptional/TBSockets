@@ -7,8 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C310C9A91EB92B0700ABC711 /* TBStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C310C9A71EB92B0700ABC711 /* TBStream.h */; };
+		C310C9A91EB92B0700ABC711 /* TBStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C310C9A71EB92B0700ABC711 /* TBStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C310C9AA1EB92B0700ABC711 /* TBStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C310C9A81EB92B0700ABC711 /* TBStream.m */; };
+		C310C9B81EB9336D00ABC711 /* TBSocketAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = C313C9A71E9EAD8B00354CB6 /* TBSocketAddress.m */; };
+		C310C9B91EB9336D00ABC711 /* TBStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C310C9A81EB92B0700ABC711 /* TBStream.m */; };
+		C310C9BA1EB9336D00ABC711 /* TBInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C313C99F1E9EAD8B00354CB6 /* TBInputStream.m */; };
+		C310C9BB1EB9336D00ABC711 /* TBOutputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C313C9A11E9EAD8B00354CB6 /* TBOutputStream.m */; };
+		C310C9BC1EB9336D00ABC711 /* TBSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C313C9A51E9EAD8B00354CB6 /* TBSocket.m */; };
+		C310C9BD1EB9336D00ABC711 /* TBServerSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C313C9A31E9EAD8B00354CB6 /* TBServerSocket.m */; };
+		C310C9BE1EB933B200ABC711 /* TBServerSocket.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C313C9A21E9EAD8B00354CB6 /* TBServerSocket.h */; };
 		C313C98E1E9EAD7400354CB6 /* TBSockets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C313C9841E9EAD7400354CB6 /* TBSockets.framework */; };
 		C313C9931E9EAD7400354CB6 /* TBSocketsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C313C9921E9EAD7400354CB6 /* TBSocketsTests.m */; };
 		C313C9951E9EAD7400354CB6 /* TBSockets.h in Headers */ = {isa = PBXBuildFile; fileRef = C313C9871E9EAD7400354CB6 /* TBSockets.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -34,9 +41,23 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		C310C9AD1EB9330600ABC711 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				C310C9BE1EB933B200ABC711 /* TBServerSocket.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		C310C9A71EB92B0700ABC711 /* TBStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBStream.h; sourceTree = "<group>"; };
 		C310C9A81EB92B0700ABC711 /* TBStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBStream.m; sourceTree = "<group>"; };
+		C310C9AF1EB9330600ABC711 /* libtbsockets.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libtbsockets.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C313C9841E9EAD7400354CB6 /* TBSockets.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TBSockets.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C313C9871E9EAD7400354CB6 /* TBSockets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBSockets.h; sourceTree = "<group>"; };
 		C313C9881E9EAD7400354CB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,6 +77,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C310C9AC1EB9330600ABC711 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C313C9801E9EAD7400354CB6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -88,6 +116,7 @@
 			children = (
 				C313C9841E9EAD7400354CB6 /* TBSockets.framework */,
 				C313C98D1E9EAD7400354CB6 /* TBSocketsTests.xctest */,
+				C310C9AF1EB9330600ABC711 /* libtbsockets.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -142,6 +171,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		C310C9AE1EB9330600ABC711 /* libtbsockets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C310C9B71EB9330600ABC711 /* Build configuration list for PBXNativeTarget "libtbsockets" */;
+			buildPhases = (
+				C310C9AB1EB9330600ABC711 /* Sources */,
+				C310C9AC1EB9330600ABC711 /* Frameworks */,
+				C310C9AD1EB9330600ABC711 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libtbsockets;
+			productName = libtbsockets;
+			productReference = C310C9AF1EB9330600ABC711 /* libtbsockets.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		C313C9831E9EAD7400354CB6 /* TBSockets */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C313C9981E9EAD7400354CB6 /* Build configuration list for PBXNativeTarget "TBSockets" */;
@@ -187,6 +233,11 @@
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Tanner Bennett";
 				TargetAttributes = {
+					C310C9AE1EB9330600ABC711 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = S6N2F22V2Z;
+						ProvisioningStyle = Automatic;
+					};
 					C313C9831E9EAD7400354CB6 = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = S6N2F22V2Z;
@@ -213,6 +264,7 @@
 			targets = (
 				C313C9831E9EAD7400354CB6 /* TBSockets */,
 				C313C98C1E9EAD7400354CB6 /* TBSocketsTests */,
+				C310C9AE1EB9330600ABC711 /* libtbsockets */,
 			);
 		};
 /* End PBXProject section */
@@ -235,6 +287,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C310C9AB1EB9330600ABC711 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C310C9BA1EB9336D00ABC711 /* TBInputStream.m in Sources */,
+				C310C9B91EB9336D00ABC711 /* TBStream.m in Sources */,
+				C310C9BB1EB9336D00ABC711 /* TBOutputStream.m in Sources */,
+				C310C9BD1EB9336D00ABC711 /* TBServerSocket.m in Sources */,
+				C310C9BC1EB9336D00ABC711 /* TBSocket.m in Sources */,
+				C310C9B81EB9336D00ABC711 /* TBSocketAddress.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C313C97F1E9EAD7400354CB6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -267,6 +332,33 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		C310C9B51EB9330600ABC711 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				DEVELOPMENT_TEAM = S6N2F22V2Z;
+				EXECUTABLE_PREFIX = "";
+				HEADER_SEARCH_PATHS = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		C310C9B61EB9330600ABC711 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				DEVELOPMENT_TEAM = S6N2F22V2Z;
+				EXECUTABLE_PREFIX = "";
+				HEADER_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		C313C9961E9EAD7400354CB6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -309,7 +401,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -355,7 +447,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -428,6 +520,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C310C9B71EB9330600ABC711 /* Build configuration list for PBXNativeTarget "libtbsockets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C310C9B51EB9330600ABC711 /* Debug */,
+				C310C9B61EB9330600ABC711 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C313C97E1E9EAD7400354CB6 /* Build configuration list for PBXProject "TBSockets" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
